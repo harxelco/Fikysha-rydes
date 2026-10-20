@@ -1,0 +1,19 @@
+---
+description: Fikysha Rydes Android project rules
+alwaysApply: true
+---
+
+You are building **Fikysha Rydes**, an Android transport marketplace, using Kotlin, Jetpack Compose and Supabase. Read `docs/PRD.md` before every task.
+
+Rules:
+1. **Migrations are the source of truth.** Every schema, policy, function or cron change goes in a new file under `supabase/migrations`. Never invent table or column names. Check the schema before writing queries.
+2. **Business logic lives in the database** (RPC functions, triggers, pg_cron). The app calls RPCs and observes data. The app never writes status, payment or commission fields directly.
+3. **Architecture**: MVVM, repositories, Hilt, StateFlow, a single UI state class per screen with Loading / Empty / Error / Content states. No business logic in composables.
+4. **No fake behaviour in the UI.** Every button reads and writes real Supabase data. Demo data comes from the seed script, flagged `is_demo`.
+5. **Security**: RLS on every table, no service-role key in the app, secrets in `local.properties` via BuildConfig.
+6. **Dependencies**: look up current stable versions and official docs before adding or changing a library. Do not guess APIs. Use a Gradle version catalog.
+7. **Work in small steps.** Complete one feature, make sure it builds, write or update tests, then summarise what changed and what to test manually on the phone. Never refactor unrelated code.
+8. If the PRD is ambiguous or two requirements conflict, **stop and ask** before building.
+9. Handle offline and error cases with clear messages and retry. Never swallow exceptions silently.
+10. Keep UI strings in `strings.xml`, currency as `KSh 1,234`, times in EAT.
+11. After each task, list the exact commands to build, run the migrations, and run the tests.
